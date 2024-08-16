@@ -58,8 +58,8 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-RAZORPAY_KEY_ID = "rzp_test_POXnobft8JwK1i"
-RAZORPAY_KEY_SECRET = "Z0Ha5vp1Rm1Mv29q9vCwf6RK"
+RAZORPAY_KEY_ID = os.getenv('RAZORPAY_KEY_ID')
+RAZORPAY_KEY_SECRET = os.getenv('RAZORPAY_KEY_SECRET')
 # Allow origins for your development frontend
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # Vite React app URL
