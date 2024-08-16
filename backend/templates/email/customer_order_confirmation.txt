@@ -1,0 +1,15 @@
+Hello {{ booking.user.username }},
+
+Thank you for your booking!
+
+Booking ID: {{ booking.id }}
+Booking Date: {{ booking.created_at }}
+
+Seats:
+{% for seat in order_items %}
+- {{ seat.row }}-{{ seat.number }}
+{% endfor %}
+
+Total: {{ booking.total_price }}
+
+Thank you for booking with us!

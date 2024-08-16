@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Booking Confirmation</title>
+</head>
+<body>
+    <h1>Booking Confirmation</h1>
+    <p>Dear {{ user.username }},</p>
+    <p>Thank you for your booking. Here are the details:</p>
+    <p><strong>Booking ID:</strong> {{ booking.id }}</p>
+    <p><strong>Movie:</strong> {{ screening.movie.title }}</p>
+    <p><strong>Date:</strong> {{ screening.screening_date }}</p>
+    <p><strong>Time:</strong> {{ screening.screening_time }}</p>
+    <p><strong>Seats:</strong> {% for seat in seats %}{{ seat.row }}-{{ seat.number }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+    <p><strong>Total Price:</strong> {{ booking.total_price }}</p>
+    <p>Thank you for choosing our service!</p>
+</body>
+</html>

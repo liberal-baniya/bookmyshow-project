@@ -1,0 +1,14 @@
+<p>Booking ID: {{ booking.id }}</p>
+<p>Movie: {{ booking.screening.movie.title }}</p>
+<p>Screening Date: {{ booking.screening.screening_date }}</p>
+<p>Screening Time: {{ booking.screening.screening_time }}</p>
+<p>Total Price: {{ amount }}</p>
+<p>Payment ID: {{ payment_id }}</p>
+<p>Order ID: {{ order_id }}</p>
+<p>Seats:</p>
+<ul>
+    {% for seat in order_items %}
+    <li>Seat {{ seat.row }}{{ seat.number }} ({{ seat.seat_type }})</li>
+    {% endfor %}
+</ul>
+<p>Thank you for booking with us!</p>
