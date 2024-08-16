@@ -13,10 +13,11 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from datetime import timedelta
 import os
 from pathlib import Path
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+load_dotenv()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -202,7 +203,7 @@ EMAIL_HOST = "smtp.sendgrid.net"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "Django Email Key"  # This is the string literal 'apikey'
-EMAIL_HOST_PASSWORD = "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"  # Replace with your actual API key
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = "thisisnaman24@icloud.com"  # Replace with your email
 
 
