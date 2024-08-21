@@ -29,16 +29,16 @@ def send_password_reset_email(user):
 
     # Simplified HTML content
     html_message = f"""
-    <html>
-    <body>
-        <p>Hi {user.username},</p>
-        <p>You're receiving this email because you requested a password reset for your account.</p>
-        <p>Click the link below to reset your password:</p>
-        <p><a href="{reset_link}">{reset_link}</a></p>
-        <p>If you didn't request this, you can ignore this email.</p>
-    </body>
-    </html>
-    """
+<html>
+<body>
+    <p>Hi {user.username},</p>
+    <p>You're receiving this email because you requested a password reset for your account.</p>
+    <p>Click the link below to reset your password:</p>
+    <p><a href="{reset_link}" style="color: #1a73e8; text-decoration: underline;">Reset your password</a></p>
+    <p>If you didn't request this, you can ignore this email.</p>
+</body>
+</html>
+"""
 
     # Create a multipart email message
     msg = MIMEMultipart("alternative")

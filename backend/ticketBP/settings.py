@@ -58,13 +58,14 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-RAZORPAY_KEY_ID = os.getenv('RAZORPAY_KEY_ID')
-RAZORPAY_KEY_SECRET = os.getenv('RAZORPAY_KEY_SECRET')
+RAZORPAY_KEY_ID = os.getenv("RAZORPAY_KEY_ID")
+RAZORPAY_KEY_SECRET = os.getenv("RAZORPAY_KEY_SECRET")
 # Allow origins for your development frontend
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # Vite React app URL
     "http://127.0.0.1:3000",  # Alternative localhost URL, if needed
 ]
+
 
 # Allow only localhost and 127.0.0.1 in development
 ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
@@ -203,7 +204,7 @@ EMAIL_HOST = "smtp.sendgrid.net"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "Django Email Key"  # This is the string literal 'apikey'
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 DEFAULT_FROM_EMAIL = "thisisnaman24@icloud.com"  # Replace with your email
 
 
@@ -211,3 +212,43 @@ DEFAULT_FROM_EMAIL = "thisisnaman24@icloud.com"  # Replace with your email
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "{levelname} {asctime} {module} {message}",
+            "style": "{",
+        },
+        "simple": {
+            "format": "{levelname} {message}",
+            "style": "{",
+        },
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "verbose",
+        },
+        "file": {
+            "class": "logging.FileHandler",
+            "filename": os.path.join(BASE_DIR, "django_debug.log"),
+            "formatter": "verbose",
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console", "file"],
+            "level": "WARNING",  # Only log warnings and above for Django
+            "propagate": True,
+        },
+        # Replace 'your_app_name' with the actual name of your app
+        "booking_api": {
+            "handlers": ["console", "file"],
+            "level": "DEBUG",  # Log all levels for your app
+            "propagate": False,  # Prevent logs from being handled by the Django logger
+        },
+    },
+}

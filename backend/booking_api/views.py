@@ -8,7 +8,7 @@ import smtplib
 from django.template.loader import render_to_string
 from rest_framework.views import APIView
 
-from rest_framework.permissions import IsAuthenticated, BasePermission
+from rest_framework.permissions import IsAuthenticated, BasePermission , IsAdminUser
 from rest_framework import permissions
 
 import razorpay
@@ -272,13 +272,13 @@ class LogoutView(APIView):
             )
 
 
-class IsAdminUser(permissions.BasePermission):
-    """
-    Custom permission to only allow admin users to access the view.
-    """
+# class IsAdminUser(permissions.BasePermission):
+#     """
+#     Custom permission to only allow admin users to access the view.
+#     """
 
-    def has_permission(self, request, view):
-        return request.user and request.user.is_staff
+#     def has_permission(self, request, view):
+#         return request.user and request.user.is_staff
 
 
 class MovieListView(generics.ListAPIView):
