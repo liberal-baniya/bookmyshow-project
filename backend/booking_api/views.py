@@ -3,31 +3,29 @@ from email.mime.text import MIMEText
 import json
 import logging
 import smtplib
-
-
-from django.template.loader import render_to_string
-from rest_framework.views import APIView
-
-from rest_framework.permissions import IsAuthenticated, BasePermission, IsAdminUser
-from rest_framework import permissions
-
-import razorpay
 from bson.decimal128 import Decimal128
+import razorpay
+from .send_password_reset_email import send_password_reset_email
+
+
 from django.conf import settings
 from django.shortcuts import get_object_or_404
-
-
-from rest_framework_simplejwt.tokens import RefreshToken
 from django.views.decorators.csrf import csrf_exempt
-from .send_password_reset_email import send_password_reset_email
+from django.template.loader import render_to_string
+from django.http import Http404, JsonResponse
+
+
 from .models import Booking, Movie, Screening, Seat, User
 
+from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated, BasePermission, IsAdminUser
+from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework import generics
 from rest_framework.decorators import api_view
 
-from django.http import Http404, JsonResponse
+
 from .serializers import (
     BookingSerializer,
     BookingSummarySerializer,
@@ -270,15 +268,6 @@ class LogoutView(APIView):
                 {"detail": "An error occurred during logout."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
-
-
-# class IsAdminUser(permissions.BasePermission):
-#     """
-#     Custom permission to only allow admin users to access the view.
-#     """
-
-#     def has_permission(self, request, view):
-#         return request.user and request.user.is_staff
 
 
 class MovieListView(generics.ListAPIView):
