@@ -8,7 +8,7 @@ import smtplib
 from django.template.loader import render_to_string
 from rest_framework.views import APIView
 
-from rest_framework.permissions import IsAuthenticated, BasePermission , IsAdminUser
+from rest_framework.permissions import IsAuthenticated, BasePermission, IsAdminUser
 from rest_framework import permissions
 
 import razorpay
@@ -341,7 +341,7 @@ class TopMovieListView(generics.ListAPIView):
 
 
 class MovieCreateView(generics.CreateAPIView):
-    queryset = Movie.objects.all()
+
     serializer_class = MovieSerializer
     permission_classes = [IsAdminUser]
 
@@ -349,7 +349,7 @@ class MovieCreateView(generics.CreateAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
+        # headers = self.get_success_headers(serializer.data)
         return Response(
             {
                 "status": "success",
@@ -357,7 +357,7 @@ class MovieCreateView(generics.CreateAPIView):
                 "movie": serializer.data,
             },
             status=status.HTTP_201_CREATED,
-            headers=headers,
+            # headers=headers,
         )
 
 
@@ -384,26 +384,20 @@ class MovieUpdateView(generics.UpdateAPIView):
 
         return Response(response_data, status=status.HTTP_200_OK)
 
-    def perform_update(self, serializer):
-        serializer.save()
-
 
 class MovieDeleteView(generics.DestroyAPIView):
     queryset = Movie.objects.all()
     serializer_class = MovieSerializer
     permission_classes = [IsAdminUser]
 
-    def delete(self, request, *args, **kwargs):
+    def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
         self.perform_destroy(instance)
 
-        # Prepare the response data
+        # Prepare the custom response data
         response_data = {"status": "success", "message": "Movie deleted successfully"}
 
         return Response(response_data, status=status.HTTP_204_NO_CONTENT)
-
-    def perform_destroy(self, instance):
-        instance.delete()
 
 
 class ScreeningListCreateView(generics.ListCreateAPIView):
@@ -558,7 +552,7 @@ class GroupedScreeningsView(APIView):
 
 
 class SeatListView(generics.ListAPIView):
-    
+
     serializer_class = SeatSerializer
 
     def get_queryset(self):
