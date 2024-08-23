@@ -1,3 +1,5 @@
+from django.utils import timezone
+from datetime import timedelta
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
@@ -206,6 +208,14 @@ class Booking(models.Model):
     total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     razorpay_order_id = models.CharField(max_length=255, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    updated_at = models.DateTimeField(auto_now=True)  # To track the last update time
+
+    def is_expired(self):
+        return (
+            self.status == "Ongoing"
+            and timezone.now() > self.created_at + timedelta(minutes=10)
+        )
 
     def __str__(self):
         return f"Booking by {self.user.username} for {self.screening.movie.title} on {self.screening.screening_date} at {self.screening.screening_time}"
