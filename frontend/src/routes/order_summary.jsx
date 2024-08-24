@@ -4,7 +4,7 @@ import { Button } from "@nextui-org/button";
 import axios from "axios";
 import AppLayout from "../components/AppLayout";
 import Text from "../components/text";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useSelector } from "react-redux";
 

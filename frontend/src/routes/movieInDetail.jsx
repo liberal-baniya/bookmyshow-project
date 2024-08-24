@@ -3,7 +3,7 @@ import { Button } from "@nextui-org/button";
 import { Chip } from "@nextui-org/chip";
 import { Image } from "@nextui-org/image";
 import { BiShare, BiStar } from "react-icons/bi";
-import { FaPlay } from "react-icons/fa";
+
 import { Link, useParams } from "react-router-dom";
 import CouraselBody from "../components/scrollCourasel";
 
