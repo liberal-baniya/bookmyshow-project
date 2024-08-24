@@ -49,7 +49,7 @@ def create_seats_for_screening(screening, total_rows, seats_per_row):
             Seat.objects.create(
                 seat_id=seat_id,
                 seat_type=seat_type,
-                price=price,  # Convert Decimal to Decimal128
+                price=price,
                 row=row_label,
                 number=number,
                 screening=screening,

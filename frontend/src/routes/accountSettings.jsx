@@ -22,7 +22,7 @@ const AccountSettings = () => {
 
       if (response.ok) {
         // Handle successful deletion, such as navigating to a different page
-        navigate("/sign_up"); // Replace with appropriate path
+        navigate("/sign_up"); 
       } else {
         console.error("Failed to delete account.");
       }

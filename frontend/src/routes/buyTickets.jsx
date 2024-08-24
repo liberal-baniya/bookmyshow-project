@@ -11,9 +11,9 @@ import {
 } from "@radix-ui/react-dropdown-menu";
 import { CgArrowRight, CgClose } from "react-icons/cg";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { Spinner } from "@nextui-org/spinner"; // Import Spinner
-import { ToastContainer, toast } from "react-toastify"; // Import Toasts
-import "react-toastify/dist/ReactToastify.css"; // Import Toast CSS
+import { Spinner } from "@nextui-org/spinner";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import MovieInHalls from "../components/MovieInHalls";
 import AppLayout from "../components/AppLayout";
 import Nav from "../components/nav";

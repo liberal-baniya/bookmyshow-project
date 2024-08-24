@@ -19,7 +19,7 @@ const LandingPage = () => {
         const response = await fetch("/api/v1/movies/top-movies/");
         if (response.ok) {
           const data = await response.json();
-          setTopMovies(data.results); // Assuming your API response has a "results" field
+          setTopMovies(data.results);
         } else {
           console.error("Failed to fetch top movies");
         }
