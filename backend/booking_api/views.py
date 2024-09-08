@@ -16,7 +16,7 @@ from django.http import Http404, JsonResponse
 
 
 from .models import Booking, Movie, Screening, Seat, User
-
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated, BasePermission, IsAdminUser
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -270,8 +270,78 @@ class LogoutView(APIView):
             )
 
 
+# class MovieListView(generics.ListAPIView):
+#     serializer_class = MovieSerializer
+
+#     def get_queryset(self):
+#         queryset = Movie.objects.all()
+#         genre = self.request.GET.get("genre")
+#         language = self.request.GET.get("language")
+#         location = self.request.GET.get("location")
+#         rating = self.request.GET.get("rating")
+
+#         if genre:
+#             queryset = queryset.filter(genre__icontains=genre)
+#         if language:
+#             queryset = queryset.filter(language__icontains=language)
+#         if location:
+#             queryset = queryset.filter(location__icontains=location)
+#         if rating:
+
+#             queryset = queryset.filter(rating__icontains=rating)
+
+#         return queryset
+
+#     def list(self, request, *args, **kwargs):
+#         queryset = self.get_queryset()
+#         serializer = self.get_serializer(queryset, many=True)
+#         response_data = {
+#             "status": "success",
+#             "count": queryset.count(),
+#             "results": serializer.data,
+#         }
+#         return Response(response_data, status=status.HTTP_200_OK)
+# class MovieListView(generics.ListAPIView):
+#     serializer_class = MovieSerializer
+#     pagination_class = PageNumberPagination  # Add pagination class
+
+#     def get_queryset(self):
+#         queryset = Movie.objects.all()
+#         genre = self.request.GET.get("genre")
+#         language = self.request.GET.get("language")
+#         location = self.request.GET.get("location")
+#         rating = self.request.GET.get("rating")
+
+#         if genre:
+#             queryset = queryset.filter(genre__icontains=genre)
+#         if language:
+#             queryset = queryset.filter(language__icontains=language)
+#         if location:
+#             queryset = queryset.filter(location__icontains=location)
+#         if rating:
+#             queryset = queryset.filter(rating__icontains=rating)
+
+#         return queryset
+
+#     def list(self, request, *args, **kwargs):
+#         queryset = self.get_queryset()
+#         page = self.paginate_queryset(queryset)  # Apply pagination
+
+#         if page is not None:
+#             serializer = self.get_serializer(page, many=True)
+#             return self.get_paginated_response(serializer.data)  # Return paginated response
+
+#         # Fallback if pagination is not applied
+#         serializer = self.get_serializer(queryset, many=True)
+#         response_data = {
+#             "status": "success",
+#             "count": queryset.count(),
+#             "results": serializer.data,
+#         }
+#         return Response(response_data, status=status.HTTP_200_OK)
 class MovieListView(generics.ListAPIView):
     serializer_class = MovieSerializer
+    pagination_class = PageNumberPagination  # Add pagination class
 
     def get_queryset(self):
         queryset = Movie.objects.all()
@@ -279,6 +349,7 @@ class MovieListView(generics.ListAPIView):
         language = self.request.GET.get("language")
         location = self.request.GET.get("location")
         rating = self.request.GET.get("rating")
+        search_query = self.request.GET.get("search")  # Get the search query parameter
 
         if genre:
             queryset = queryset.filter(genre__icontains=genre)
@@ -287,13 +358,21 @@ class MovieListView(generics.ListAPIView):
         if location:
             queryset = queryset.filter(location__icontains=location)
         if rating:
-
             queryset = queryset.filter(rating__icontains=rating)
+        if search_query:
+            queryset = queryset.filter(title__icontains=search_query)  # Filter by movie title
 
         return queryset
 
     def list(self, request, *args, **kwargs):
         queryset = self.get_queryset()
+        page = self.paginate_queryset(queryset)  # Apply pagination
+
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)  # Return paginated response
+
+        # Fallback if pagination is not applied
         serializer = self.get_serializer(queryset, many=True)
         response_data = {
             "status": "success",
@@ -551,10 +630,10 @@ class SeatListView(generics.ListAPIView):
     def list(self, request, *args, **kwargs):
         queryset = self.get_queryset()
         serializer = self.get_serializer(queryset, many=True)
-        for seat in queryset:
-            print(
-                f"Seat ID: {seat.id}, Price Type: {type(seat.price)}, Price Value: {seat.price}"
-            )
+        # for seat in queryset:
+        #     print(
+        #         f"Seat ID: {seat.id}, Price Type: {type(seat.price)}, Price Value: {seat.price}"
+        #     )
         return Response(
             {"screening_id": self.kwargs["screening_id"], "seats": serializer.data}
         )

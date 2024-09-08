@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu";
 import { CgArrowRight, CgClose } from "react-icons/cg";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import {  useParams, useSearchParams } from "react-router-dom";
 import { Spinner } from "@nextui-org/spinner";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -28,15 +28,15 @@ const TIME_CHOICES = [
 ];
 
 const DATE_CHOICES = [
-  { value: "2024-08-17", label: "17 August 2024" },
-  { value: "2024-08-18", label: "18 August 2024" },
-  { value: "2024-08-19", label: "19 August 2024" },
+  { value: "2024-08-17", label: "25 August 2024" },
+  { value: "2024-08-18", label: "26 August 2024" },
+  { value: "2024-08-19", label: "27 August 2024" },
 ];
 
 const BuyTickets = () => {
   const { movie_id, name } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
-  const navigate = useNavigate();
+
   const [screenings, setScreenings] = useState([]);
   const [movieTitle, setmovieTitle] = useState("");
   const [filters, setFilters] = useState([]);
@@ -44,15 +44,12 @@ const BuyTickets = () => {
   const [error, setError] = useState(null); // Error state
 
   const handleFilter = (value) => {
-    const updatedFilters = filters.map((filter) =>
-      filter.label === value.label ? value : filter
-    );
-
-    if (!updatedFilters.find((filter) => filter.label === value.label)) {
-      updatedFilters.push(value);
-    }
-
-    setFilters(updatedFilters);
+    setFilters((prevFilters) => {
+      const updatedFilters = prevFilters.filter(
+        (filter) => filter.label !== value.label
+      );
+      return [...updatedFilters, value];
+    });
 
     if (value.label === "Time") {
       searchParams.set("screening_time", value.value);
@@ -230,3 +227,19 @@ const BuyTickets = () => {
 };
 
 export default BuyTickets;
+// const handleFilter = (value) => {
+//   const updatedFilters = filters.map((filter) =>
+//     filter.label === value.label ? value : filter
+//   );
+
+//   if (!updatedFilters.find((filter) => filter.label === value.label)) {
+//     updatedFilters.push(value);
+//   }
+
+//   setFilters(updatedFilters);
+
+//   if (value.label === "Time") {
+//     searchParams.set("screening_time", value.value);
+//   }
+//   setSearchParams(searchParams); // Update the query params in the URL
+// };

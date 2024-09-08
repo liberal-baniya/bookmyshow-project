@@ -165,11 +165,13 @@ REST_FRAMEWORK = {
         # 'booking_api.authentication.CookieAuthentication',  # Replace with the actual path
         "rest_framework_simplejwt.authentication.JWTAuthentication"
     ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 6,
 }
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(
-        minutes=15
+        minutes=45
     ),  # Set the lifetime of the access token
     "REFRESH_TOKEN_LIFETIME": timedelta(
         days=1
@@ -212,6 +214,9 @@ DEFAULT_FROM_EMAIL = "thisisnaman24@icloud.com"  # Replace with your email
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+
 
 
 LOGGING = {
